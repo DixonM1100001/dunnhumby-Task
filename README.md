@@ -18,7 +18,8 @@ git clone https://github.com/DixonM1100001/dunnhumby-Task.git
 
 ### Initalising the Database
 
-The repository you have cloned will contain a Database folder. This contains a DB script called 'ProductManagement.db'. You can open this in SQLite to view the data easily. It is referenced in the API solution with the correct folder structure. 
+The repository you have cloned will contain a Database folder. This contains a DB script called 'ProductManagement.db' which has both the schema for a table 'products' and some initial data.
+You can open this in SQLite to view the data easily. It is referenced in the API solution with the correct folder structure. 
 
 ### Building the Frontend project
 
@@ -30,12 +31,12 @@ npm install
 npm start
 ```
 
-There is also a README.md file with more details of available scripts for this React App
+There is also a README.md file in the UI folder with more details of available scripts for this React App
 
 ### Building the API project
 
 The API project will be found in the API folder of the repository you have cloned. Please navigate into the folder 'ProductmanagementAPI' and then open the ProductManagementAPI.sln.
-To start building this project, simply press the build button. 
+To start building this project, simply press the build button for the 'https' project. 
 Whilst running the API in development mode, a Swagger UI will be launched with interactive documentation of the available API requests.
 You can also view the API Documentation section below for similar details.
 

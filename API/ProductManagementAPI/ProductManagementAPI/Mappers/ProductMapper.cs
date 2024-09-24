@@ -16,8 +16,7 @@ namespace ProductManagementAPI.Mappers
                 Price = product.Price,
                 SKU = product.SKU,
                 StockQuantity = product.StockQuantity,
-                DateAdded = product.DateAdded,
-                LastUpdatedDate = product.LastUpdatedDate
+                DateAdded = product.DateAdded
             };
         }
 
@@ -31,8 +30,7 @@ namespace ProductManagementAPI.Mappers
                 Price = productData.Price,
                 SKU = productData.SKU,
                 StockQuantity = productData.StockQuantity,
-                DateAdded = productData.DateAdded,
-                LastUpdatedDate = productData.LastUpdatedDate,
+                DateAdded = productData.DateAdded
             };
         }
 

@@ -49,25 +49,29 @@ There is an API so list all the products in your database, and an API to create 
 The API uses the following schemas and are referenced in the section below. 
 - Category
 ```shell 
-	Enum: [ Food, Electronics, Clothes ]
+	Enum: 
+	[ Food, Electronics, Clothes ]
 ```
 - Product
 ```shell
 {
-	category	Categorys string Enum: Array [ 3 ]
+	category	Categorys string 
+			Enum: Array [ 3 ]
 	name		string
 	productCode	string
 	price		number($double)
+	priceSterling	string 
+			readOnly: true
 	sku		string
 	stockQuantity	integer($int32)
 	dateAdded	string($date-time)
-	lastUpdatedDate	string($date-time) nullable: true
 }
 ```
 - ProductRequest
 ```shell
 {
-	category	Category string Enum: Array [ 3 ]
+	category	Category string
+			Enum: Array [ 3 ]
 	name	        string
 	productCode	string
 	price	        number($double)
@@ -88,10 +92,10 @@ The Response scehma will look like the following example value of the Product Sc
     "name": "string",
     "productCode": "string",
     "price": 0,
+    "priceSterling": "string"
     "sku": "string",
     "stockQuantity": 0,
-    "dateAdded": "2024-09-24T15:35:38.467Z",
-    "lastUpdatedDate": "2024-09-24T15:35:38.467Z"
+    "dateAdded": "2024-09-24T15:35:38.467Z"
   }
 ]
 ```
@@ -115,10 +119,10 @@ If the Creation is successful, a 200 Code will be returned along with the Respon
   "name": "string",
   "productCode": "string",
   "price": 0,
+  "priceSterling": "string"
   "sku": "string",
   "stockQuantity": 0,
-  "dateAdded": "2024-09-24T15:47:21.741Z",
-  "lastUpdatedDate": "2024-09-24T15:47:21.741Z"
+  "dateAdded": "2024-09-24T15:47:21.741Z"
 }
 ```
 The dateAdded property will be the DateTime of the request and inserted automatically during the creation process.

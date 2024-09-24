@@ -30,8 +30,5 @@ namespace ProductManagementAPI.Repositories.Models
 
         [Column("DateAdded")]
         public DateTime DateAdded { get; set; }
-
-        [Column("LastUpdatedDate")]
-        public DateTime? LastUpdatedDate { get; set; }
     }
 }

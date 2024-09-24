@@ -1,22 +1,25 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
+import { DataTable } from './components/DataTable';
+import { IProduct } from './models/product';
+import { fetchProducts } from './services/api';
 
 function App() {
+  const [products, setProducts] = useState<IProduct[]>([]);
+
+  useEffect(() => {
+    fetchProducts().then(products => setProducts(products));
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className="app">
+      <header className="app-header">
+        <h1>Welcome to the Product Management Dashboard!</h1>
       </header>
+      <h2>Your Products</h2>
+      <div className="product-data-table">
+        <DataTable products={products} />
+      </div>
     </div>
   );
 }

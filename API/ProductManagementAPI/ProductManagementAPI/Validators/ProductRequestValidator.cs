@@ -20,6 +20,7 @@ namespace ProductManagementAPI.Validators
                 return !productCodeExists;
             }).WithMessage("Product Code must be unique");
             RuleFor(x => x.Price).GreaterThanOrEqualTo(0);
+            RuleFor(x => x.Price).PrecisionScale(int.MaxValue, 2, false).WithMessage("The price must not have more than 2 digits after the decimal and no trailling 0s");
             RuleFor(x => x.SKU).NotEmpty();
             RuleFor(x => x.SKU).MustAsync(async (sku, cancellation) =>
             {

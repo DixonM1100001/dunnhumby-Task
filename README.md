@@ -78,7 +78,7 @@ The API uses the following schemas and are referenced in the section below.
 
 ### Endpoints
 
-1) GET api/products
+1) GET api/products \
 This API endpoint allows the user to see all of the products in their database. The endpoint does not take any Parameters and will deliver a 200 reponse for success. 
 The Response scehma will look like the following example value of the Product Schema in an array
 ```shell
@@ -96,7 +96,7 @@ The Response scehma will look like the following example value of the Product Sc
 ]
 ```
 
-2) POST api/products
+2) POST api/products \
 This API endpoint allows the user to create a product and add it to their database. The endpoint does not take any Parameters but does take a Request body that will look like the following example value of the ProductRequest Schema
 ```shell 
 {

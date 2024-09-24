@@ -1,4 +1,5 @@
-﻿using ProductManagementAPI.Repositories.Models;
+﻿using ProductManagementAPI.Contracts;
+using ProductManagementAPI.Repositories.Models;
 using ProductManagementAPI.Services.Models;
 
 namespace ProductManagementAPI.Mappers
@@ -9,7 +10,14 @@ namespace ProductManagementAPI.Mappers
         {
             return new ProductData
             {
-
+                Category = product.Category,
+                Name = product.Name,
+                ProductCode = product.ProductCode,
+                Price = product.Price,
+                SKU = product.SKU,
+                StockQuantity = product.StockQuantity,
+                DateAdded = product.DateAdded,
+                LastUpdatedDate = product.LastUpdatedDate
             };
         }
 
@@ -21,7 +29,7 @@ namespace ProductManagementAPI.Mappers
                 Name = productData.Name,
                 ProductCode = productData.ProductCode,
                 Price = productData.Price,
-                SKU = productData.ProductCode,
+                SKU = productData.SKU,
                 StockQuantity = productData.StockQuantity,
                 DateAdded = productData.DateAdded,
                 LastUpdatedDate = productData.LastUpdatedDate,
@@ -31,6 +39,20 @@ namespace ProductManagementAPI.Mappers
         public static IEnumerable<Product> ToProductModel(this IEnumerable<ProductData> productsData)
         {
             return productsData.Select(p => p.ToProductModel());
+        }
+
+        public static Product ToProductModel(this ProductRequest productRequest)
+        {
+            return new Product
+            {
+                Category = productRequest.Category,
+                Name = productRequest.Name,
+                ProductCode = productRequest.ProductCode,
+                Price = productRequest.Price,
+                SKU = productRequest.SKU,
+                StockQuantity = productRequest.StockQuantity,
+                DateAdded = DateTime.UtcNow
+            };
         }
     }
 }

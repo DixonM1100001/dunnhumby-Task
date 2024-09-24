@@ -13,9 +13,12 @@ namespace ProductManagementAPI.Services
             _productsRepository = productsRepository;
         }
 
-        public Task<Product> CreateProductAsync(Product product)
+        public async Task<Product> CreateProductAsync(Product product)
         {
-            throw new NotImplementedException();
+            var productDataModelToInsert = ProductMapper.ToProductDataModel(product);
+            var insertedProductData = await _productsRepository.CreateProductAsync(productDataModelToInsert);
+            var insertedProduct = ProductMapper.ToProductModel(insertedProductData);
+            return insertedProduct;
         }
 
         public async Task<IEnumerable<Product>> GetAllProductsAsync()

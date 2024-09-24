@@ -36,8 +36,100 @@ There is also a README.md file in the UI folder with more details of available s
 ### Building the API project
 
 The API project will be found in the API folder of the repository you have cloned. Please navigate into the folder 'ProductmanagementAPI' and then open the ProductManagementAPI.sln.
-To start building this project, simply press the build button for the 'https' project. 
-Whilst running the API in development mode, a Swagger UI will be launched with interactive documentation of the available API requests.
+To start building this project, simply press the build button for the 'ProductManagementAPI' project. 
+Whilst running the API in development mode, a SwaggerUI will be launched with interactive documentation of the available API requests.
 You can also view the API Documentation section below for similar details.
 
 ## API Documentation
+
+The ProductManagementAPI supports two publicly exposed APIs that do not need any authentication to access and no rate limiting or other limitations.
+There is an API so list all the products in your database, and an API to create a product.
+
+### Schemas
+The API uses the following schemas and are referenced in the section below. 
+- Category
+```shell 
+	Enum: [ Food, Electronics, Clothes ]
+```
+- Product
+```shell
+{
+	category	Categorys string Enum: Array [ 3 ]
+	name		string
+	productCode	string
+	price		number($double)
+	sku		string
+	stockQuantity	integer($int32)
+	dateAdded	string($date-time)
+	lastUpdatedDate	string($date-time) nullable: true
+}
+```
+- ProductRequest
+```shell
+{
+	category	Category string Enum: Array [ 3 ]
+	name	        string
+	productCode	string
+	price	        number($double)
+	sku	        string
+	stockQuantity	integer($int32)
+}
+```
+
+### Endpoints
+
+1) GET api/products
+This API endpoint allows the user to see all of the products in their database. The endpoint does not take any Parameters and will deliver a 200 reponse for success. 
+The Response scehma will look like the following example value of the Product Schema in an array
+```shell
+[
+  {
+    "category": "Food",
+    "name": "string",
+    "productCode": "string",
+    "price": 0,
+    "sku": "string",
+    "stockQuantity": 0,
+    "dateAdded": "2024-09-24T15:35:38.467Z",
+    "lastUpdatedDate": "2024-09-24T15:35:38.467Z"
+  }
+]
+```
+
+2) POST api/products
+This API endpoint allows the user to create a product and add it to their database. The endpoint does not take any Parameters but does take a Request body that will look like the following example value of the ProductRequest Schema
+```shell 
+{
+  "category": "Food",
+  "name": "string",
+  "productCode": "string",
+  "price": 0,
+  "sku": "string",
+  "stockQuantity": 0
+}
+```
+If the Creation is successful, a 200 Code will be returned along with the Response Schema that will look like the following example value of the Product Schema
+```shell
+{
+  "category": "Food",
+  "name": "string",
+  "productCode": "string",
+  "price": 0,
+  "sku": "string",
+  "stockQuantity": 0,
+  "dateAdded": "2024-09-24T15:47:21.741Z",
+  "lastUpdatedDate": "2024-09-24T15:47:21.741Z"
+}
+```
+The dateAdded property will be the DateTime of the request and inserted automatically during the creation process.
+
+If the creation fails due to validation errors, a 400 code will be returned along with the a Response Schema that is an array of a list of errors and looks like the following example value:
+```shell
+[
+  "'Name' must not be empty.",
+  "'Product Code' must not be empty."
+]
+``` 
+
+### Tools
+The 'ProductManagementAPI' project launches a SwaggerUI that you can use to try out the above APIs. Alternatively, you can use Postman or similar API software.

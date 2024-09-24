@@ -16,9 +16,10 @@ namespace ProductManagementAPI.Repositories
 
             _db.CreateTableAsync<ProductData>();
         }
-        public Task<ProductData> CreateProductAsync(ProductData product)
+        public async Task<ProductData> CreateProductAsync(ProductData product)
         {
-            throw new NotImplementedException();
+            await _db.InsertAsync(product);
+            return product;
         }
 
         public async Task<IEnumerable<ProductData>> GetAllProductsAsync()

@@ -10,5 +10,5 @@ export async function fetchProducts(): Promise<IProduct[]> {
 }
 
 function GetProductApiPath(): string {
-    return API_BASE_URL + '/products';
+    return API_BASE_URL + '/product';
 }

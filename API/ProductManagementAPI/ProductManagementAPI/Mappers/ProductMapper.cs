@@ -36,7 +36,7 @@ namespace ProductManagementAPI.Mappers
 
         public static IEnumerable<Product> ToProductModel(this IEnumerable<ProductData> productsData)
         {
-            return productsData.Select(p => p.ToProductModel());
+            return productsData.Select(ToProductModel);
         }
 
         public static Product ToProductModel(this ProductRequest productRequest)

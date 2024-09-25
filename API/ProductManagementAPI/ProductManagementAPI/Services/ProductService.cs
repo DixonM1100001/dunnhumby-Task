@@ -4,11 +4,11 @@ using ProductManagementAPI.Services.Models;
 
 namespace ProductManagementAPI.Services
 {
-    public class ProductsService : IProductsService
+    public class ProductService : IProductService
     {
-        private readonly IProductsRepository _productsRepository;
+        private readonly IProductRepository _productsRepository;
 
-        public ProductsService(IProductsRepository productsRepository)
+        public ProductService(IProductRepository productsRepository)
         {
             _productsRepository = productsRepository;
         }

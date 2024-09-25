@@ -2,7 +2,7 @@
 
 namespace ProductManagementAPI.Services
 {
-    public interface IProductsService
+    public interface IProductService
     {
         Task<Product> CreateProductAsync(Product product);
         Task<IEnumerable<Product>> GetAllProductsAsync();

@@ -6,8 +6,8 @@ namespace ProductManagementAPI.Validators
 {
     public class ProductRequestValidator : AbstractValidator<ProductRequest>
     {
-        private readonly IProductsService _productsService;
-        public ProductRequestValidator(IProductsService productsService) {
+        private readonly IProductService _productsService;
+        public ProductRequestValidator(IProductService productsService) {
             _productsService = productsService;
 
             RuleFor(x => x.Category).IsInEnum();

@@ -32,9 +32,9 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IProductsRepository, ProductsRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IValidator<ProductRequest>, ProductRequestValidator>();
-builder.Services.AddTransient<IProductsService, ProductsService>();
+builder.Services.AddTransient<IProductService, ProductService>();
 
 var app = builder.Build();
 

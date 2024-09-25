@@ -3,11 +3,11 @@ using SQLite;
 
 namespace ProductManagementAPI.Repositories
 {
-    public class ProductsRepository : IProductsRepository
+    public class ProductRepository : IProductRepository
     {
         private SQLiteAsyncConnection _db;
 
-        public ProductsRepository()
+        public ProductRepository()
         {
             _db = new SQLiteAsyncConnection("../../../Database/ProductManagement.db", 
                 SQLiteOpenFlags.Create |

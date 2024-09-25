@@ -83,8 +83,8 @@ The API uses the following schemas and are referenced in the section below.
 ### Endpoints
 
 1) GET api/product \
-This API endpoint allows the user to see all of the products in their database. The endpoint does not take any Parameters and will deliver a 200 reponse for success. 
-If the response is a success, a 200 Status code, Ok, will be returned along with a Response. The Response scehma will look like the following example value of the Product Schema in an array:
+This API endpoint allows the user to see all of the products in their database. The endpoint does not take any Parameters or a Request Body. 
+If the GET is successful, a 200 Status code, Ok, will be returned along with a Response. The Response scehma will look like the following example value of the Product Schema in an array:
 ```shell
 [
   {
@@ -114,7 +114,7 @@ This API endpoint allows the user to create a product and add it to their databa
   "stockQuantity": 0
 }
 ```
-If the Creation is successful, a 200 Code will be returned along with the Response Schema that will look like the following example value of the Product Schema:
+If the POST is successful, a 200 Code will be returned along with the Response Schema that will look like the following example value of the Product Schema:
 ```shell
 {
   "category": "Food",
@@ -129,7 +129,7 @@ If the Creation is successful, a 200 Code will be returned along with the Respon
 ```
 The dateAdded property will be the DateTime of the request and inserted automatically during the creation process.
 
-If the creation fails due to validation errors, a 422 status code, UnprocessableEntity, will be returned along with the a Response Schema that is an array of a list of errors and looks like the following example value:
+If the POST fails due to validation errors, a 422 status code, UnprocessableEntity, will be returned along with the a Response Schema that is an array of a list of errors and looks like the following example value:
 ```shell
 [
   "'Name' must not be empty.",
@@ -137,7 +137,7 @@ If the creation fails due to validation errors, a 422 status code, Unprocessable
 ]
 ``` 
 
-If the creation fails because of an internal error, a 500 status code will be returned along with the error message.
+If the POST fails because of an internal error, a 500 status code will be returned along with the error message.
 
 ### Tools
 The 'ProductManagementAPI' project launches a SwaggerUI that you can use to try out the above APIs. Alternatively, you can use Postman or similar API software.

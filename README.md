@@ -24,7 +24,7 @@ You can open this in SQLite to view the data easily. It is referenced in the API
 ### Building the Frontend project
 
 The Frontend project will be found in the UI folder of the repository you have cloned.
-To start building this project please open the folder 'product-management-dashboard > src' inside the UI folder and run the following commands
+To start building this project please open the folder 'product-management-dashboard > src' inside the UI folder and run the following commands:
 
 ```shell
 npm install

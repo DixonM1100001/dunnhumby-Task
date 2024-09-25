@@ -10,3 +10,10 @@
   width: 80vw;
   margin: auto;
 }
+
+.product-graphs {
+  height: 80vh;
+  margin: auto;
+  display: flex;
+  justify-content: space-around;
+}

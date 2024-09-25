@@ -1,4 +1,4 @@
-import { IProduct } from "../models/product";
+import { IProduct } from "../models/interfaces/product";
 
 const API_BASE_URL: string = 'https://localhost:7030/api';
 

@@ -2,10 +2,10 @@ export interface IProduct {
     category: string;
     name: string;
     productCode: string;
-    price: Number;
+    price: number;
     priceSterling: string;
     sku: string;
-    stockQuantity: Number;
+    stockQuantity: number;
     dateAdded: Date;
 }
 

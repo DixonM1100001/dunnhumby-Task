@@ -1,8 +1,8 @@
-import { IProduct } from "../models/product";
+import { IProduct } from "../models/interfaces/product";
 import { AgGridReact } from 'ag-grid-react';
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css"
-import { IProductDisplay } from "../models/productDisplay";
+import { IProductDisplay } from "../models/interfaces/productDisplay";
 import './DataTable.css';
 import React, { useMemo } from "react";
 import { format } from "date-fns/format";
@@ -31,18 +31,18 @@ export const DataTable: React.FC<IDataTableProps> = ({products}) => {
     const defaultColDef = useMemo(() => { 
         return {
             resizable: true,
-            cellStyle: {'text-align': 'left'}
+            cellStyle: {'textAlign': 'left'}
         };
     }, []);
 
     return (
         <React.Fragment>
-            <h3>Your Product Data</h3>
+            <h3>Your Products</h3>
             <div className="data-table ag-theme-quartz">
             <AgGridReact
                 defaultColDef={defaultColDef}
                 columnDefs={colDefs}
-                rowData={GetProductDisplayProperties(products)}
+                rowData={getProductDisplayProperties(products)}
                 pagination
                 paginationAutoPageSize
                 autoSizeStrategy={autoSizeStrategy}
@@ -52,7 +52,7 @@ export const DataTable: React.FC<IDataTableProps> = ({products}) => {
        )
 }
 
-function GetProductDisplayProperties(products: IProduct[]) : IProductDisplay[] {
+function getProductDisplayProperties(products: IProduct[]) : IProductDisplay[] {
     const productDisplayProperties = [] as IProductDisplay[];
     
     products.forEach(p => productDisplayProperties.push({

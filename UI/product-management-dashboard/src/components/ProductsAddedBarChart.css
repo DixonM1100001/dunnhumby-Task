@@ -1,0 +1,8 @@
+.stock-quantity-added-bar-chart {
+    display: flex;
+}
+
+.stock-quantity-added-bar-chart-radio-buttons {
+    font-size: 12px;
+    text-align: left;
+}

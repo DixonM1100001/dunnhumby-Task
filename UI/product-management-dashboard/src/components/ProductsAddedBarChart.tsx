@@ -36,7 +36,7 @@ export const ProductsAddedBarChart: React.FC<ProductsAddedBarChartProps> = ({pro
             {data && <div className="stock-quantity-added-bar-chart">
                 <Bar
                     id='products-added'
-                    key={`products-added+ ${Math.random()}`}
+                    key={`products-added_${Math.random().toString()}`}
                     data={data}
                 />
                 <div>
@@ -49,7 +49,7 @@ export const ProductsAddedBarChart: React.FC<ProductsAddedBarChartProps> = ({pro
                                     value={f.timePeriod}
                                     id={f.timePeriod.toString()}
                                     onChange={e => onTimeFilterChange(e)} 
-                                    checked={f.timePeriod == timeFrame}/>
+                                    checked={f.timePeriod === timeFrame}/>
                             <label htmlFor={f.timePeriod.toString()}>{f.description}</label>
                         </div>
                     ))}

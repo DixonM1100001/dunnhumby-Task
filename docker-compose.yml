@@ -1,0 +1,22 @@
+services:
+ UI:
+  image: product-management-dashboard
+  container_name: product-management-dashboard
+  build:
+   context: UI/product-management-dashboard
+   dockerfile: /frontend.dockerfile
+  ports:
+     - "3000:3000"   
+ API:
+  environment:
+    - ASPNETCORE_ENVIRONMENT=Development
+    - ASPNETCORE_HTTP_PORTS=7030
+  container_name: product-management-api
+  image: product-management-api
+  volumes:
+      - /Database/ProductManagement.db:/app/Database/ProductManagement.db
+  build:
+   context: API/ProductManagementAPI
+   dockerfile: /backend.dockerfile
+  ports:
+      - "7030:7030"

@@ -141,3 +141,20 @@ If the POST fails because of an internal error, a 500 status code will be return
 
 ### Tools
 The 'ProductManagementAPI' project launches a SwaggerUI that you can use to try out the above APIs. Alternatively, you can use Postman or similar API software.
+
+## Docker
+
+This project contains script to create images and containers of the application.
+You can access the frontend UI and backend API service and SwaggerUI. However, I cannot get it to connect to the database file as written above and so the docker images do not fully work and you cannot test the application through docker.
+The purpose of this section is to illistrate what I have done. 
+
+### Creating the images
+In the repository you have pulled down, there is a docker-compose.yml file. This file references a backend.dockerfile (in API/ProductManagement directory) and a frontend.dockerfile (in UI/project-management-dashboard directory).
+To run and create the docker images, please follow these steps:
+	1. Download Docker Desktop for your OS and sign in/continue without signing in
+	2. Open a Powershell or CMD and run 
+		```shell
+		docker-compose -f docker-compose.yml up
+		```
+		If this is the first time running it, the script may take a while.
+	3. Once the images are built, you can open https:localhost:3000 for the UI and http:localhost:7030/index.html for the SqaggerUI page for the API. (Note that as no certificate has been created for https, docker will only allow http)

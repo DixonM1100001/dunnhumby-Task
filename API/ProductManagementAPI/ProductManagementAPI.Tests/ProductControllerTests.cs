@@ -1,3 +1,5 @@
+using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using ProductManagementAPI.Contracts;
@@ -12,17 +14,15 @@ namespace ProductManagementAPI.Tests
     public class ProductControllerTests
     {
         private readonly Mock<IProductService> _mockProductService;
+        private readonly Mock<IValidator<ProductRequest>> _mockValidator;
+        
         private ProductController _controller;
-
-        const string uniqueString = "Unique";
-        const string nonUniqueString = "NonUnique";
-
-        static int counter = 1;
 
         public ProductControllerTests()
         {
             _mockProductService = new Mock<IProductService>();
-            _controller = new ProductController( _mockProductService.Object );
+            _mockValidator = new Mock<IValidator<ProductRequest>>();
+            _controller = new ProductController( _mockProductService.Object, _mockValidator.Object);
         }
 
 
@@ -99,6 +99,11 @@ namespace ProductManagementAPI.Tests
             //Arrange
             var validTestProductRequest = GetValidTestProductRequest();
             var validTestProduct = ProductMapper.ToProductModel(validTestProductRequest);
+
+            _mockValidator.Setup(x => x.ValidateAsync(validTestProductRequest, It.IsAny<CancellationToken>())).ReturnsAsync(new ValidationResult
+            {
+                Errors = new List<ValidationFailure>()
+            });
             _mockProductService.Setup(x => x.CreateProductAsync(It.IsAny<Product>())).ReturnsAsync(validTestProduct);
 
             //Act
@@ -120,12 +125,16 @@ namespace ProductManagementAPI.Tests
             Assert.Equal(validTestProductRequest.SKU, validTestProduct.SKU);
         }
 
-        [Theory]
-        [MemberData(nameof(InvalidProductRequest))]
-        public async void TestCreateProductReturnsUnprocessableEntityWhenValidationFails(ProductRequest invalidProductRequest, string testName, List<Product> productsInDatabase)
+        [Fact]
+        public async void TestCreateProductReturnsUnprocessableEntityWhenValidationFails()
         {
             //Arrange
-            _mockProductService.Setup(x => x.GetAllProductsAsync()).ReturnsAsync(productsInDatabase);
+            var invalidProductRequest = new ProductRequest { Name = "Name", ProductCode = "NAM1", SKU = "SKU" };
+
+            _mockValidator.Setup(x => x.ValidateAsync(invalidProductRequest, It.IsAny<CancellationToken>())).ReturnsAsync(new ValidationResult
+            {
+                Errors = new List<ValidationFailure> { new ValidationFailure() }
+            });
 
             //Act
             var response = await _controller.CreateProduct(invalidProductRequest);
@@ -146,6 +155,13 @@ namespace ProductManagementAPI.Tests
             //Arrange
             var validTestProductRequest = GetValidTestProductRequest();
             var validTestProduct = ProductMapper.ToProductModel(validTestProductRequest);
+
+
+            _mockValidator.Setup(x => x.ValidateAsync(validTestProductRequest, It.IsAny<CancellationToken>())).ReturnsAsync(new ValidationResult
+            {
+                Errors = new List<ValidationFailure>()
+            });
+
             _mockProductService.Setup(x => x.CreateProductAsync(It.IsAny<Product>())).ThrowsAsync(new Exception());
 
             //Act
@@ -189,63 +205,9 @@ namespace ProductManagementAPI.Tests
                 Category = Category.Food,
                 Price = 1.23M,
                 ProductCode = "Test1",
-                SKU = GetUniqueString(),
+                SKU = "SKU",
                 StockQuantity = 1
             };
-        }
-
-        public static IEnumerable<object[]> InvalidProductRequest()
-        {
-            yield return new object[] { new ProductRequest {
-                Category = (Category)5, Name = GetUniqueString(), ProductCode = GetUniqueString(), SKU = GetUniqueString(), Price=1.11M, StockQuantity=1
-            }, "Test Invalid Category", new List<Product>() };
-            yield return new object[] { new ProductRequest {
-                Category = (Category)1, Name = "", ProductCode = GetUniqueString(), SKU = GetUniqueString(), Price=1.11M, StockQuantity=1
-            }, "Test Empty Name", new List<Product>() };
-            yield return new object[] { new ProductRequest {
-                Category = (Category)1, Name = GetUniqueString(), ProductCode = "", SKU = GetUniqueString(), Price=1.11M, StockQuantity=1
-            }, "Test Empty Product Code", new List<Product>() };
-            yield return new object[] { new ProductRequest {
-                Category = (Category)1, Name = GetUniqueString(), ProductCode = GetUniqueString(), SKU = GetUniqueString(), Price=-1.11M, StockQuantity=1
-            }, "Test Price Less than 0", new List<Product>() };
-            yield return new object[] { new ProductRequest {
-                Category = (Category)1, Name = GetUniqueString(), ProductCode = GetUniqueString(), SKU = GetUniqueString(), Price=1.111M, StockQuantity=1
-            }, "Test Price has more than two decimal places", new List<Product>() };
-            yield return new object[] { new ProductRequest {
-                Category = (Category)1, Name = GetUniqueString(), ProductCode = GetUniqueString(), SKU = "", Price=1.11M, StockQuantity=1
-            }, "Test Empty SKU", new List<Product>() };
-            yield return new object[] { new ProductRequest {
-                Category = (Category)1, Name = GetUniqueString(), ProductCode = GetUniqueString(), SKU = GetUniqueString(), Price=1.11M, StockQuantity=-1
-            }, "Test StockQuantity Less than 0", new List<Product>() };
-            yield return new object[] { 
-                new ProductRequest {
-                Category = (Category)1, Name = GetUniqueString(), ProductCode = GetUniqueString(), SKU = nonUniqueString, Price=1.11M, StockQuantity=-1
-            }, "Test SKU already in database",
-                    new List<Product> { new() {
-                        SKU = nonUniqueString,
-                        ProductCode = GetUniqueString(),
-                        Name = GetUniqueString()
-                    }
-                }
-            };
-            yield return new object[] {
-                new ProductRequest {
-                Category = (Category)1, Name = GetUniqueString(), ProductCode = nonUniqueString, SKU = GetUniqueString(), Price=1.11M, StockQuantity=-1
-            }, "Test ProductCode already in database",
-                    new List<Product> { new() {
-                        SKU = GetUniqueString(),
-                        ProductCode = nonUniqueString,
-                        Name = GetUniqueString()
-                    }
-                }
-            };
-        }
-
-        private static string GetUniqueString()
-        {
-            ++counter;
-
-            return uniqueString + counter.ToString();
         }
 
         #endregion

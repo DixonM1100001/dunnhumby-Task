@@ -1,3 +1,4 @@
+using FluentValidation;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using ProductManagementAPI.Contracts;
@@ -13,10 +14,12 @@ namespace ProductManagementAPI.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productsService;
+        private readonly IValidator<ProductRequest> _validator;
 
-        public ProductController(IProductService productsService)
+        public ProductController(IProductService productsService, IValidator<ProductRequest> validator)
         {
             _productsService = productsService;
+            _validator = validator;
         }
 
         [HttpGet]
@@ -36,8 +39,7 @@ namespace ProductManagementAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>> CreateProduct([FromBody] ProductRequest productRequest)
         {
-            var validator = new ProductRequestValidator(_productsService);
-            var validationResult = await validator.ValidateAsync(productRequest);
+            var validationResult = await _validator.ValidateAsync(productRequest);
 
             if (validationResult.IsValid)
             {
